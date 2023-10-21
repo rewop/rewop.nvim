@@ -271,6 +271,15 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- Set relative numbers
+vim.o.relativenumber = true
+
+-- hihghlight current line
+vim.o.cursorline = true
+
+-- minimum number of visible line to keep before or after the cursor
+vim.o.scrolloff = 10
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -280,6 +289,28 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Center screen when searching and scrolling
+vim.keymap.set('n', '<C-u>', '<C-u>zz', {})
+vim.keymap.set('n', '<C-d>', '<C-d>zz', {})
+vim.keymap.set('n', '<C-b>', '<C-b>zz', {})
+vim.keymap.set('n', '<C-f>', '<C-f>zz', {})
+vim.keymap.set('n', 'n', 'nzz', {})
+vim.keymap.set('n', 'N', 'Nzz', {})
+
+-- Remaps for buffer operations
+vim.keymap.set('n', '<leader>bd', function()
+  vim.api.nvim_buf_delete(0, {})
+end, { desc = '[D]elete current [b]uffer' })
+
+-- Remaps for windows movements
+vim.keymap.set('n', '<leader>wj', '<C-w>j')
+vim.keymap.set('n', '<leader>wk', '<C-w>k')
+vim.keymap.set('n', '<leader>wh', '<C-w>h')
+vim.keymap.set('n', '<leader>wl', '<C-w>l')
+
+-- Remaps for current project
+vim.keymap.set('n', '<leader>pe', vim.cmd.Ex)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -326,6 +357,7 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [K]eymaps' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -427,7 +459,7 @@ local on_attach = function(_, bufnr)
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>ps', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[P]roject [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -435,11 +467,11 @@ local on_attach = function(_, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
+  nmap('<leader>pa', vim.lsp.buf.add_workspace_folder, '[P]roject [A]dd Folder')
+  nmap('<leader>pr', vim.lsp.buf.remove_workspace_folder, '[P]roject [R]emove Folder')
+  nmap('<leader>pl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  end, '[P]roject [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -455,7 +487,9 @@ require('which-key').register {
   ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>p'] = { name = '[P]roject', _ = 'which_key_ignore' },
+  ['<leader>b'] = { name = '[B]uffer', _ = '_which_key_ignore' },
+  ['<leader>w'] = { name = '[W]indow', _ = '_which_key_ignore' },
 }
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -473,11 +507,11 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
+  gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  tsserver = {},
+  html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
     Lua = {
