@@ -74,7 +74,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   -- navigate with tmux
-  { 
+  {
     'alexghergh/nvim-tmux-navigation',
     opts = {
       keybindings = {
@@ -89,7 +89,20 @@ require('lazy').setup({
     config = true,
   },
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = true,
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons'
+    },
+    config = true,
+  },
+
+  -- NOTE: This is  where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
@@ -336,6 +349,10 @@ vim.keymap.set('n', '<leader>wl', '<C-w>l')
 
 -- Remaps for current project
 vim.keymap.set('n', '<leader>pe', vim.cmd.Ex)
+
+-- keymaps for diffview
+vim.keymap.set('n', '<leader>gv', require('diffview').open, { desc = 'Open [G]it Diff[V]iew' })
+vim.keymap.set('n', '<leader>gq', require('diffview').close, { desc = '[C]lose [G]it Diffview' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
