@@ -318,6 +318,10 @@ vim.o.cursorline = true
 -- minimum number of visible line to keep before or after the cursor
 vim.o.scrolloff = 10
 
+-- set transparent background
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
