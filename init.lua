@@ -319,8 +319,13 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 
 -- set transparent background
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none", ctermbg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", ctermbg = "none" })
+vim.api.nvim_set_hl(0, "NonText", { bg = "none", ctermbg = "none" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none", ctermbg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none", ctermbg = "none" })
+-- vim.api.nvim_set_hl(0, "Structure", { bg = "none", ctermbg = "none" })
+-- vim.api.nvim_set_hl(0, "LineNr", { bg = "none", ctermbg = "none" })
 
 -- [[ Basic Keymaps ]]
 
