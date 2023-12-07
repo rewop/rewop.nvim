@@ -38,9 +38,5 @@ vim.keymap.set("n", "]b", "<Cmd>bn<CR>", { desc = "Go to next buffer" })
 vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>')
 vim.keymap.set('n', '<C-S>', '<Cmd>wa<CR>')
 
--- keymaps for diffview
-vim.keymap.set('n', '<leader>gv', function () require('diffview').open() end, { desc = 'Open [G]it Diff[V]iew' })
-vim.keymap.set('n', '<leader>gq', function () require('diffview').close() end, { desc = '[C]lose [G]it Diffview' })
-
 -- kaymap for lazy
 vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = "Open [L]azy" })
