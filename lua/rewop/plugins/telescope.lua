@@ -16,14 +16,21 @@ return {
                 return vim.fn.executable 'make' == 1
             end,
         },
+        "nvim-tree/nvim-web-devicons",
     },
-    config = function() 
-        require('telescope').setup({
+    config = function()
+        local telescope = require("telescope")
+        local actions = require("telescope.actions")
+        local telescope_builtin = require('telescope.builtin')
+
+        telescope.setup({
             defaults = {
                 mappings = {
                     i = {
                         ["<C-h>"] = "which_key",
-                    }
+                        ["<C-k>"] = actions.move_selection_previous,
+                        ["<C-j>"] = actions.move_selection_next,
+                    },
                 },
                 -- pickers = {
                 -- },   
@@ -31,8 +38,10 @@ return {
                 -- }
             }
         })
+
+        telescope.load_extension("fzf")
+
         -- add telescope pickers keys
-        telescope_builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader><space>', telescope_builtin.find_files, { desc = '[ ] Find existing buffers' })
         vim.keymap.set('n', '<leader>?', telescope_builtin.oldfiles, { desc = '[?] Find recently opened files' })
         vim.keymap.set('n', '<leader>/', function()

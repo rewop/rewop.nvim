@@ -17,7 +17,7 @@ return {
         require("nvim-treesitter.query_predicates")
     end,
     config = function()
-        local treesitter_config = require("nvim-treesitter.configs").setup({
+        require("nvim-treesitter.configs").setup({
             -- Add languages to be installed here that you want installed for treesitter
             ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
