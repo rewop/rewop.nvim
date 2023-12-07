@@ -14,15 +14,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('rewop.plugins', {
+require('lazy').setup(
+    {{import = 'rewop.plugins' }, {import = 'rewop.plugins.lsp'}}, { 
     install = {
         missing = true,
         colorscheme = { 'catppuccin' },
     },
     change_detection = {
-        notify = false, -- get a notification when changes are found
+        notify = false,
     },
     checker = {
-        notify = false, -- get a notification when new updates are found
+        enabled = true,
+        notify = false,
     },
-}) -- TODO add lazy configuration (e.g. disable notifications
+})
