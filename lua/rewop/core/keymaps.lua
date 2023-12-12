@@ -25,7 +25,13 @@ vim.keymap.set('n', 'N', 'Nzz', {})
 
 -- Remaps for buffer operations
 vim.keymap.set('n', '<leader>bd', function()
-  vim.api.nvim_buf_delete(0, {})
+    local current_bf = vim.api.nvim_get_current_buf()
+    local prev_bf = vim.fn.getbufinfo("#")[1]
+    if prev_bf ~= nil and prev_bf.listed == 1 then
+        vim.print("a previou buffer exists")
+        vim.cmd.b(prev_bf.bufnr)
+    end
+    vim.api.nvim_buf_delete(current_bf, {})
 end, { desc = '[D]elete current [b]uffer' })
 vim.keymap.set("n", "<leader>bb", "<Cmd>b#<CR>", { desc = "Go to alternate buffer" })
 vim.keymap.set("n", "<leader>bD", "<Cmd>%bd<CR>", {desc = "Delete all buffers"})
