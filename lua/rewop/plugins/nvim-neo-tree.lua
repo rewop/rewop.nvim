@@ -26,7 +26,7 @@ return {
 		    end,
 	    },
     },
-    init = function() 
+    init = function()
         -- disaable netrw
         vim.g.loaded_netrwPlugin = 1
         vim.g.loaded_netrw = 1
@@ -55,7 +55,7 @@ return {
         km.set("n", "<leader>eb", "<cmd>Neotree focus buffers<CR>", { desc = "Show neotree buffer explorer" })
     end,
 
-    config = function() 
+    config = function()
         local neotree = require("neo-tree")
         -- If you want icons for diagnostic errors, you'll need to define them somewhere:
         vim.fn.sign_define("DiagnosticSignError",
@@ -70,7 +70,17 @@ return {
         neotree.setup({
             window = {
                 position = "right",
-            }
+            },
+            filesystem = {
+                follow_current_file = {
+                    enabled = true,
+                },
+            },
+            buffers = {
+                follow_current_file = {
+                    enabled = true,
+                },
+            },
         })
-    end 
+    end
   }
