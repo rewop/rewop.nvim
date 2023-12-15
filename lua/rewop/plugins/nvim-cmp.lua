@@ -55,10 +55,10 @@ return  {
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
-                ['<CR>'] = cmp.mapping.confirm({ 
+                ['<CR>'] = cmp.mapping.confirm({
                     nehaviour = cmp.ConfirmBehavior.Replace,
-                    select = true, 
-                }), 
+                    select = true,
+                }),
                 -- ['<Tab>'] = cmp.mapping(function(fallback)
                 --     if cmp.visible() then
                 --         cmp.select_next_item()
@@ -87,9 +87,8 @@ return  {
                 { name = 'buffer' }, -- complete text from the current buffer
             })
         })
+        require("luasnip").filetype_extend("astro", {"html", "javascript", "typescript"})
         -- Set configuration for specific filetype.
-        -- cmp.setup.filetype('lua')
-        -- cmp.setup.filetype('gitcommit', {
         --     sources = cmp.config.sources({
         --         { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
         --     }, {

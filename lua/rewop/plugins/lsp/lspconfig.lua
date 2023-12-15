@@ -96,6 +96,7 @@ return {
             "htmx",
             "grammarly",
             "dockerls",
+            "astro",
         }
 
         for _, server in ipairs(servers) do
