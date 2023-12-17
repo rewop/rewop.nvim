@@ -20,8 +20,6 @@ return  {
         local cmp = require("cmp")
         local lspkind = require("lspkind")
         local luasnip = require("luasnip")
-        -- load snippets from friendly snippets
-        require("luasnip.loaders.from_vscode").lazy_load()
 
         cmp.setup({
             completion = {
@@ -56,7 +54,7 @@ return  {
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<CR>'] = cmp.mapping.confirm({
-                    nehaviour = cmp.ConfirmBehavior.Replace,
+                    behaviour = cmp.ConfirmBehavior.Replace,
                     select = true,
                 }),
                 -- ['<Tab>'] = cmp.mapping(function(fallback)
@@ -87,7 +85,6 @@ return  {
                 { name = 'buffer' }, -- complete text from the current buffer
             })
         })
-        require("luasnip").filetype_extend("astro", {"html", "javascript", "typescript"})
         -- Set configuration for specific filetype.
         --     sources = cmp.config.sources({
         --         { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
