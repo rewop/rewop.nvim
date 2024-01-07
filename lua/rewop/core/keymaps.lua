@@ -1,7 +1,7 @@
 -- [[ Basic Keymaps ]]
 
--- Map escape 
-vim.keymap.set({'i', 'v'}, 'jk', '<Esc>')
+-- Map escape
+vim.keymap.set({ 'i', 'v' }, 'jk', '<Esc>')
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -25,24 +25,23 @@ vim.keymap.set('n', 'N', 'Nzz', {})
 
 -- Remaps for buffer operations
 vim.keymap.set('n', '<leader>bd', function()
-    local current_bf = vim.api.nvim_get_current_buf()
-    local prev_bf = vim.fn.getbufinfo("#")[1]
-    if prev_bf ~= nil and prev_bf.listed == 1 then
-        vim.print("a previou buffer exists")
-        vim.cmd.b(prev_bf.bufnr)
-    end
-    vim.api.nvim_buf_delete(current_bf, {})
+  local current_bf = vim.api.nvim_get_current_buf()
+  local prev_bf = vim.fn.getbufinfo('#')[1]
+  if prev_bf ~= nil and prev_bf.listed == 1 then
+    vim.cmd.b(prev_bf.bufnr)
+  end
+  vim.api.nvim_buf_delete(current_bf, {})
 end, { desc = '[D]elete current [b]uffer' })
-vim.keymap.set("n", "<leader>bb", "<Cmd>b#<CR>", { desc = "Go to alternate buffer" })
-vim.keymap.set("n", "<leader>bD", "<Cmd>%bd<CR>", {desc = "Delete all buffers"})
-vim.keymap.set("n", "<leader>bO", "<Cmd>%bd|e#<CR>", {desc = "Delete all other buffers"})
-vim.keymap.set("n", "<leader>`", "<Cmd>b#<CR>", { desc = "Go to alternate buffer" })
-vim.keymap.set("n", "[b", "<Cmd>bp<CR>", { desc = "Go to prev buffer" })
-vim.keymap.set("n", "]b", "<Cmd>bn<CR>", { desc = "Go to next buffer" })
+vim.keymap.set('n', '<leader>bb', '<Cmd>b#<CR>', { desc = 'Go to alternate buffer' })
+vim.keymap.set('n', '<leader>bD', '<Cmd>%bd<CR>', { desc = 'Delete all buffers' })
+vim.keymap.set('n', '<leader>bO', '<Cmd>%bd|e#<CR>', { desc = 'Delete all other buffers' })
+vim.keymap.set('n', '<leader>`', '<Cmd>b#<CR>', { desc = 'Go to alternate buffer' })
+vim.keymap.set('n', '[b', '<Cmd>bp<CR>', { desc = 'Go to prev buffer' })
+vim.keymap.set('n', ']b', '<Cmd>bn<CR>', { desc = 'Go to next buffer' })
 
 -- Save commands
 vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>')
 vim.keymap.set('n', '<C-S>', '<Cmd>wa<CR>')
 
 -- kaymap for lazy
-vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = "Open [L]azy" })
+vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = 'Open [L]azy' })

@@ -56,7 +56,6 @@ return {
   end,
 
   config = function()
-    vim.print 'neotree config'
     local neotree = require 'neo-tree'
     -- If you want icons for diagnostic errors, you'll need to define them somewhere:
     vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
