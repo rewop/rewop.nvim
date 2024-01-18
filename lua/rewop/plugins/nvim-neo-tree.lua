@@ -18,7 +18,7 @@ return {
             bo = {
               -- if the file type is one of following, the window will be ignored
               filetype = { 'neo-tree', 'neo-tree-popup', 'notify' },
-              -- if the buffer type is one of following, the window will be ignoredneo
+              -- if the buffer type is one of following, the window will be ignored
               buftype = { 'terminal', 'quickfix' },
             },
           },
@@ -45,8 +45,6 @@ return {
 
     -- [[Keymaps]]
     local km = vim.keymap
-    -- TODO Create a function that either focus or toggles the tree on the last state depending if the
-    -- neotree state is Open or not
     km.set('n', '<leader>et', '<cmd>Neotree toggle last<CR>', { desc = 'Focus neotree explorer' })
     km.set('n', '<leader>ec', '<cmd>Neotree close<CR>', { desc = 'Close neotree explorer' })
     km.set('n', '<leader>ee', '<cmd>Neotree focus last<CR>', { desc = 'Toggle neotree explorer' })
