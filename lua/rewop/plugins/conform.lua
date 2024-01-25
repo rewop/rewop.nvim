@@ -27,7 +27,7 @@ return {
         yaml = { { 'prettierd', 'prettier' } },
         markdown = { { 'prettierd', 'prettier' } },
         astro = { { 'prettierd', 'prettier' } },
-        go = { 'goimports', 'goimports-reviser', 'gofumpt' },
+        go = { 'goimports', 'gofumpt' },
       },
       format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     }

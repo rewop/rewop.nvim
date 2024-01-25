@@ -27,7 +27,7 @@ return {
     },
   },
   init = function()
-    -- disaable netrw
+    -- disable netrw
     vim.g.loaded_netrwPlugin = 1
     vim.g.loaded_netrw = 1
 
@@ -38,7 +38,7 @@ return {
       group = 'neotree',
       callback = function()
         if vim.fn.argc() == 0 and vim.fn.exists 's:std_in' == 0 then
-          vim.cmd 'Neotree toggle'
+          vim.cmd 'Neotree show'
         end
       end,
     })
