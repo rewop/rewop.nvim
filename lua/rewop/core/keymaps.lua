@@ -41,8 +41,8 @@ vim.keymap.set('n', '[b', '<Cmd>bp<CR>', { desc = 'Go to prev buffer' })
 vim.keymap.set('n', ']b', '<Cmd>bn<CR>', { desc = 'Go to next buffer' })
 
 -- Save commands
-vim.keymap.set('n', '<C-s>', '<Cmd>w<CR>')
-vim.keymap.set('n', '<C-S>', '<Cmd>wa<CR>')
+vim.keymap.set('n', '<leader>w', '<Cmd>w<CR>', { desc = 'Write current buffer' })
+vim.keymap.set('n', '<leader>W', '<Cmd>wa<CR>', { desc = 'Write all buffer' })
 
 -- kaymap for lazy
 vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = 'Open [L]azy' })
