@@ -48,8 +48,8 @@ vim.keymap.set('n', '<leader>W', '<Cmd>wa<CR>', { desc = 'Write all buffer' })
 vim.keymap.set('n', '<leader>l', '<Cmd>Lazy<CR>', { desc = 'Open [L]azy' })
 
 -- keymap for tabs
-vim.keymap.set('n', '<C-w>tc', '<Cmd>tabnew<CR>', { desc = 'Crate a new tab' })
-vim.keymap.set('n', '<C-w>tx', '<Cmd>tabclose<CR>', { desc = 'Close current tab' })
-vim.keymap.set('n', '<C-w>tp', '<Cmd>tabp<CR>', { desc = 'Previous tab' })
-vim.keymap.set('n', '<C-w>tn', '<cmd>tabn<cr>', { desc = 'Next tab' })
-vim.keymap.set('n', '<C-w>to', '<cmd>tabonly<cr>', { desc = 'Close other tabs' })
+vim.keymap.set('n', '<leader>tc', '<Cmd>tabnew<CR>', { desc = 'Crate a new tab' })
+vim.keymap.set('n', '<leader>tx', '<Cmd>tabclose<CR>', { desc = 'Close current tab' })
+vim.keymap.set('n', '<leader>tp', '<Cmd>tabp<CR>', { desc = 'Previous tab' })
+vim.keymap.set('n', '<leader>tn', '<cmd>tabn<cr>', { desc = 'Next tab' })
+vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>', { desc = 'Close other tabs' })
