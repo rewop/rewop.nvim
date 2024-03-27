@@ -53,3 +53,11 @@ vim.keymap.set('n', '<leader>tx', '<Cmd>tabclose<CR>', { desc = 'Close current t
 vim.keymap.set('n', '<leader>tp', '<Cmd>tabp<CR>', { desc = 'Previous tab' })
 vim.keymap.set('n', '<leader>tn', '<cmd>tabn<cr>', { desc = 'Next tab' })
 vim.keymap.set('n', '<leader>to', '<cmd>tabonly<cr>', { desc = 'Close other tabs' })
+
+-- keymaps for register
+vim.keymap.set('n', '<leader>y+', '"+y', { desc = 'Yank to system register' })
+vim.keymap.set('n', '<leader>p+', '"+p', { desc = 'Paste from system register' })
+vim.keymap.set('n', '<leader>py', '"0p', { desc = 'Paste from the last yank register' })
+vim.keymap.set('n', '<leader>pd', '"1p', { desc = 'Paste from the last delete register' })
+-- remap default paste to paste from the last yank register
+vim.keymap.set('n', 'p', '"0p')
