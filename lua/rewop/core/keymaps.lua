@@ -8,6 +8,10 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
+-- easy motion for start and end of line
+vim.keymap.set({ 'n', 'v' }, 'H', '^', { silent = true })
+vim.keymap.set({ 'n', 'v' }, 'L', '$', { silent = true })
+
 -- insert blank line without leaving normal mode
 vim.keymap.set('n', '<Leader>o', 'o<Esc>', { desc = 'Add a blank line below without insert mode' })
 vim.keymap.set('n', '<Leader>O', 'O<Esc>', { desc = 'Add a blank line above without insert mode' })
@@ -59,5 +63,3 @@ vim.keymap.set('n', '<leader>y+', '"+y', { desc = 'Yank to system register' })
 vim.keymap.set('n', '<leader>p+', '"+p', { desc = 'Paste from system register' })
 vim.keymap.set('n', '<leader>py', '"0p', { desc = 'Paste from the last yank register' })
 vim.keymap.set('n', '<leader>pd', '"1p', { desc = 'Paste from the last delete register' })
--- remap default paste to paste from the last yank register
-vim.keymap.set('n', 'p', '"0p')

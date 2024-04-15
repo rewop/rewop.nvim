@@ -1,2 +1,2 @@
-require("rewop.core")
-require("rewop.lazy")
+require 'rewop.core'
+require 'rewop.lazy'
