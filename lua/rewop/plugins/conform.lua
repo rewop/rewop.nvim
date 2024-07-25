@@ -49,6 +49,7 @@ return {
         markdown = { { 'prettierd', 'prettier' } },
         astro = { { 'prettierd', 'prettier' } },
         go = { 'goimports', 'gofumpt' },
+        proto = { 'buf' },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable

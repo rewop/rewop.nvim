@@ -16,7 +16,7 @@ return {
 
       -- show definition, reference
       opts.desc = 'Show LSP References'
-      keymap.set('n', 'gR', '<CMD>Telescope lsp_references<CR>', opts)
+      keymap.set('n', 'gR', '<CMD>Telescope lsp_references fname_width=80<CR>', opts)
 
       -- go to declaration
       opts.desc = 'Go to Declaration'
@@ -94,12 +94,20 @@ return {
       'yamlls',
       'terraformls',
       'marksman',
-      'spectral',
+      -- 'spectral',
       'helm_ls',
       'htmx',
-      'grammarly',
       'dockerls',
       'astro',
+      'cucumber_language_server',
+      'bufls',
+      {
+
+        'golangci_lint_ls',
+        {
+          filetypes = { 'go', 'gomod' },
+        },
+      },
     }
 
     for _, server in ipairs(servers) do

@@ -23,7 +23,7 @@ vim.o.breakindent = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
-vim.o.shiftwrap = true
+-- vim.o.shiftwrap = true
 vim.o.expandtab = true
 
 -- Save undo history
@@ -64,3 +64,12 @@ vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = 'none', ctermbg = 'none' })
 vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'none', ctermbg = 'none' })
 -- vim.api.nvim_set_hl(0, "Structure", { bg = "none", ctermbg = "none" })
 -- vim.api.nvim_set_hl(0, "LineNr", { bg = "none", ctermbg = "none" })
+
+-- set default fodling behaviour
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- vim.o.foldtext = ''
+-- vim.o.fillchars = 'fold: '
+vim.opt.foldlevel = 99
+-- vim.opt.foldlevelstart = 1
+vim.opt.foldnestmax = 4

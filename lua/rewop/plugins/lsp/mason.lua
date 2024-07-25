@@ -36,6 +36,8 @@ return {
         'marksman',
         'helm_ls',
         'dockerls',
+        'cucumber_language_server',
+        'golangci_lint_ls',
       },
       automatic_installation = true,
     }
