@@ -99,7 +99,6 @@ return {
       'htmx',
       'dockerls',
       'astro',
-      'cucumber_language_server',
       'bufls',
       {
 

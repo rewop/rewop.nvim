@@ -147,15 +147,11 @@ return {
       -- Add which-key mappings
       local wk = require 'which-key'
       wk.register {
-        g = {
-          m = {
-            name = '+Copilot Chat',
-            d = 'Show diff',
-            p = 'System prompt',
-            s = 'Show selection',
-            y = 'Yank diff',
-          },
-        },
+        { 'gm', group = 'Copilot Chat' },
+        { 'gmd', desc = 'Show diff' },
+        { 'gmp', desc = 'System prompt' },
+        { 'gms', desc = 'Show selection' },
+        { 'gmy', desc = 'Yank diff' },
       }
     end,
     event = 'VeryLazy',
