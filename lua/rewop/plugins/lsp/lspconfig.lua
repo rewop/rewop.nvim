@@ -96,12 +96,10 @@ return {
       'marksman',
       -- 'spectral',
       'helm_ls',
-      'htmx',
       'dockerls',
       'astro',
       'bufls',
       {
-
         'golangci_lint_ls',
         {
           filetypes = { 'go', 'gomod' },
