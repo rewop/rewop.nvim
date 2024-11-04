@@ -36,7 +36,7 @@ return {
         'marksman',
         'helm_ls',
         'dockerls',
-        'golangci_lint_ls',
+        -- 'golangci_lint_ls',
       },
       automatic_installation = true,
     }
