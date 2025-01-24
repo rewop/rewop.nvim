@@ -105,6 +105,7 @@ return {
           filetypes = { 'go', 'gomod' },
         },
       },
+      'graphql',
     }
 
     for _, server in ipairs(servers) do
