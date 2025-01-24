@@ -37,6 +37,7 @@ return {
         'helm_ls',
         'dockerls',
         'graphql',
+        'buf_ls',
         -- 'golangci_lint_ls',
       },
       automatic_installation = true,

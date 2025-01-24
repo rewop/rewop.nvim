@@ -23,7 +23,7 @@ return {
   },
   {
     'CopilotC-Nvim/CopilotChat.nvim',
-    branch = 'canary',
+    branch = 'main',
     dependencies = {
       { 'github/copilot.vim' }, -- or github/copilot.vim
       { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
@@ -71,11 +71,11 @@ return {
           normal = 'gmd',
         },
         -- Show the prompt
-        show_system_prompt = {
+        show_info = {
           normal = 'gmp',
         },
         -- Show the user selection
-        show_user_selection = {
+        show_context = {
           normal = 'gms',
         },
       },
@@ -100,11 +100,9 @@ return {
           return select.gitdiff(source, true)
         end,
       }
+      opts.chat_autcomplete = true
 
       chat.setup(opts)
-
-      -- Setup the CMP integration
-      require('CopilotChat.integrations.cmp').setup()
 
       vim.api.nvim_create_user_command('CopilotChatVisual', function(args)
         chat.ask(args.args, { selection = select.visual })

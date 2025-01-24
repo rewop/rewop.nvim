@@ -98,7 +98,7 @@ return {
       'helm_ls',
       'dockerls',
       'astro',
-      'bufls',
+      'buf_ls',
       {
         'golangci_lint_ls',
         {
