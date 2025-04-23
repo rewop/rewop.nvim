@@ -99,13 +99,15 @@ return {
       'dockerls',
       'astro',
       'buf_ls',
-      {
-        'golangci_lint_ls',
-        {
-          filetypes = { 'go', 'gomod' },
-        },
-      },
+      -- {
+      --   'golangci_lint_ls',
+      --   {
+      --     filetypes = { 'go', 'gomod' },
+      --   },
+      -- },
       'graphql',
+      'dartls',
+      'prismals',
     }
 
     for _, server in ipairs(servers) do

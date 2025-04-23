@@ -38,7 +38,7 @@ return {
         'dockerls',
         'graphql',
         'buf_ls',
-        -- 'golangci_lint_ls',
+        'prismals',
       },
       automatic_installation = true,
     }
