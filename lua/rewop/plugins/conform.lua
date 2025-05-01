@@ -50,6 +50,7 @@ return {
         astro = { 'prettierd', 'prettier' },
         go = { 'goimports', 'gofumpt' },
         proto = { 'buf' },
+        sql = { 'sqlfluff' },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
