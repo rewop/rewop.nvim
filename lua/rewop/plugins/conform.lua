@@ -51,6 +51,7 @@ return {
         go = { 'goimports', 'gofumpt' },
         proto = { 'buf' },
         sql = { 'sqlfluff' },
+        python = { 'ruff' },
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable

@@ -39,6 +39,7 @@ return {
         'graphql',
         'buf_ls',
         'prismals',
+        'ruff',
       },
       automatic_installation = true,
     }

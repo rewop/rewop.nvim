@@ -6,4 +6,3 @@ require("rewop.core.options")
 require("rewop.core.keymaps")
 require("rewop.core.autogroups")
 
-

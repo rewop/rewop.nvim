@@ -6,54 +6,59 @@ return {
     'antosha417/nvim-lsp-file-operations',
   },
   config = function()
-    local lspconfig = require 'lspconfig'
     local cmp_nvim_lsp = require 'cmp_nvim_lsp'
     local keymap = vim.keymap
 
     local opts = { noremap = true, silent = true }
-    local on_attach = function(_, bufnr)
-      opts.buffer = bufnr
 
-      -- show definition, reference
-      opts.desc = 'Show LSP References'
-      keymap.set('n', 'gR', '<CMD>Telescope lsp_references fname_width=80<CR>', opts)
+    -- Set up LSP keymaps using autocommand (required for new LSP API)
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+      callback = function(ev)
+        local bufnr = ev.buf
+        local buffer_opts = vim.tbl_extend('force', opts, { buffer = bufnr })
 
-      -- go to declaration
-      opts.desc = 'Go to Declaration'
-      keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        -- show definition, reference
+        buffer_opts.desc = 'Show LSP References'
+        keymap.set('n', 'gR', '<CMD>Telescope lsp_references fname_width=80<CR>', buffer_opts)
 
-      -- show definitions
-      opts.desc = 'Show LSP definitions'
-      keymap.set('n', 'gd', '<CMD>Telescope lsp_definitions<CR>', opts)
+        -- go to declaration
+        buffer_opts.desc = 'Go to Declaration'
+        keymap.set('n', 'gD', vim.lsp.buf.declaration, buffer_opts)
 
-      -- show implementations
-      opts.desc = 'Show LSP implementations'
-      keymap.set('n', 'gI', '<CMD>Telescope lsp_implementations<CR>', opts)
+        -- show definitions
+        buffer_opts.desc = 'Show LSP definitions'
+        keymap.set('n', 'gd', '<CMD>Telescope lsp_definitions<CR>', buffer_opts)
 
-      -- show LSP type definitions
-      opts.desc = 'Show LSP type definitions'
-      keymap.set('n', 'gt', '<CMD>Telescope lsp_type_definitions<CR>', opts)
+        -- show implementations
+        buffer_opts.desc = 'Show LSP implementations'
+        keymap.set('n', 'gI', '<CMD>Telescope lsp_implementations<CR>', buffer_opts)
 
-      opts.desc = 'See available code actions'
-      keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+        -- show LSP type definitions
+        buffer_opts.desc = 'Show LSP type definitions'
+        keymap.set('n', 'gt', '<CMD>Telescope lsp_type_definitions<CR>', buffer_opts)
 
-      -- trigger smart rename
-      opts.desc = 'Smart rename'
-      keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+        buffer_opts.desc = 'See available code actions'
+        keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, buffer_opts)
 
-      -- show documentation for what is under cursor
-      opts.desc = 'Show documentation for what is under cursor'
-      keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        -- trigger smart rename
+        buffer_opts.desc = 'Smart rename'
+        keymap.set('n', 'grn', vim.lsp.buf.rename, buffer_opts)
 
-      -- restart LSP
-      opts.desc = 'Restart lsp'
-      keymap.set('n', '<leader>rs', '<CMD>LspRestart<CR>', opts)
-    end
+        -- show documentation for what is under cursor
+        buffer_opts.desc = 'Show documentation for what is under cursor'
+        keymap.set('n', 'K', vim.lsp.buf.hover, buffer_opts)
+
+        -- restart LSP
+        buffer_opts.desc = 'Restart lsp'
+        keymap.set('n', 'grs', '<CMD>LspRestart<CR>', buffer_opts)
+      end,
+    })
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Set the diagnostic symbols in the sigh column
-    local signs = { Error = ' ', Warn = ' ', Hint = '󰠠 ', Info = ' ' }
+    local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
     for type, icon in pairs(signs) do
       local hl = 'DiagnosticSign' .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
@@ -113,7 +118,6 @@ return {
     for _, server in ipairs(servers) do
       local config = {
         capabilities = capabilities,
-        on_attach = on_attach,
       }
       local servername = ''
 
@@ -125,7 +129,9 @@ return {
         servername = server
       end
 
-      lspconfig[servername].setup(config)
+      -- FIXED: Pass the servername (string) instead of server (which could be a table)
+      vim.lsp.enable(servername)
+      vim.lsp.config(servername, config)
     end
   end,
 }
