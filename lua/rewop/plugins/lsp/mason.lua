@@ -40,6 +40,7 @@ return {
         'buf_ls',
         'prismals',
         'ruff',
+        'omnisharp',
       },
       automatic_installation = true,
     }

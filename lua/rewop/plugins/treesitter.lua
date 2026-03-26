@@ -36,6 +36,7 @@ return {
         'proto',
         'http',
         'prisma',
+        'c_sharp',
       },
 
       -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
