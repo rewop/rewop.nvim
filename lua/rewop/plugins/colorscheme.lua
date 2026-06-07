@@ -13,6 +13,15 @@ return {
     config = function()
       require('catppuccin').setup {
         transparent_background = true,
+        float = { transparent = true },
+        custom_highlights = function(colors)
+          return {
+            TelescopeBorder = { bg = 'NONE', fg = colors.surface1 },
+            TelescopePreviewBorder = { bg = 'NONE', fg = colors.surface1 },
+            TelescopeResultsBorder = { bg = 'NONE', fg = colors.surface1 },
+            TelescopePromptBorder = { bg = 'NONE', fg = colors.surface1 },
+          }
+        end,
         integrations = {
           cmp = true,
           dap = true,
