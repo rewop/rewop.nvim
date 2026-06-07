@@ -41,10 +41,6 @@ return {
         buffer_opts.desc = 'See available code actions'
         keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, buffer_opts)
 
-        -- trigger smart rename
-        buffer_opts.desc = 'Smart rename'
-        keymap.set('n', '<leader>rn', vim.lsp.buf.rename, buffer_opts)
-
         -- show documentation for what is under cursor
         buffer_opts.desc = 'Show documentation for what is under cursor'
         keymap.set('n', 'K', vim.lsp.buf.hover, buffer_opts)
