@@ -4,7 +4,7 @@ Plugin gaps/upgrades found by comparing this config against current LazyVim defa
 
 ## High priority
 
-- [ ] Replace `nvim-cmp` (+ luasnip cmp source) with `blink.cmp` — faster native fuzzy matcher, built-in snippets, zero-config; this is LazyVim's current default completion engine.
+- [x] Replace `nvim-cmp` (+ luasnip cmp source) with `blink.cmp` — faster native fuzzy matcher, built-in snippets, zero-config; this is LazyVim's current default completion engine.
 - [ ] Add `flash.nvim` — enhanced f/t motions, treesitter jump, remote operations. Pure addition, nothing in the config currently covers this.
 - [ ] Add `persistence.nvim` — per-cwd session save/restore. Pure addition, no session handling exists today.
 - [ ] Add `mini.ai` — better text objects. `mini.nvim` is already a dependency (via `mini.pairs`/`mini.surround`), so this is a one-line addition.
