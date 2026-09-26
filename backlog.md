@@ -11,6 +11,7 @@ Plugin gaps/upgrades found by comparing this config against current LazyVim defa
 
 ## Medium priority / optional
 
+- [x] Replace `telescope.nvim` (+ fzf-native, live-grep-args) with `fzf-lua` — already installed as a neogit optional dependency; all `<leader>s*` keymaps and LSP `g*` pickers ported.
 - [ ] Evaluate `snacks.picker` as a replacement for `telescope.nvim` + `dressing.nvim`. Telescope is more battle-tested/extensible; snacks is faster and folds dressing's input UI in. Taste call, not a clear upgrade.
 - [ ] Evaluate `snacks.explorer` as a replacement for `nvim-neo-tree`. Neo-tree is more configurable; snacks is snappier. Taste call.
 - [ ] Evaluate `snacks.notifier` as a replacement for `nvim-notify`. Cosmetic only.

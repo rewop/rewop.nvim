@@ -19,7 +19,7 @@ return {
 
         -- show definition, reference
         buffer_opts.desc = 'Show LSP References'
-        keymap.set('n', 'gR', '<CMD>Telescope lsp_references fname_width=80<CR>', buffer_opts)
+        keymap.set('n', 'gR', '<CMD>FzfLua lsp_references<CR>', buffer_opts)
 
         -- go to declaration
         buffer_opts.desc = 'Go to Declaration'
@@ -27,15 +27,15 @@ return {
 
         -- show definitions
         buffer_opts.desc = 'Show LSP definitions'
-        keymap.set('n', 'gd', '<CMD>Telescope lsp_definitions<CR>', buffer_opts)
+        keymap.set('n', 'gd', '<CMD>FzfLua lsp_definitions<CR>', buffer_opts)
 
         -- show implementations
         buffer_opts.desc = 'Show LSP implementations'
-        keymap.set('n', 'gI', '<CMD>Telescope lsp_implementations<CR>', buffer_opts)
+        keymap.set('n', 'gI', '<CMD>FzfLua lsp_implementations<CR>', buffer_opts)
 
         -- show LSP type definitions
         buffer_opts.desc = 'Show LSP type definitions'
-        keymap.set('n', 'gt', '<CMD>Telescope lsp_type_definitions<CR>', buffer_opts)
+        keymap.set('n', 'gt', '<CMD>FzfLua lsp_typedefs<CR>', buffer_opts)
 
         buffer_opts.desc = 'See available code actions'
         keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, buffer_opts)
