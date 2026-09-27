@@ -56,9 +56,6 @@ return {
         'goimports',
         'goimports-reviser',
         'eslint_d',
-        'roslyn',
-        'csharpier',
-        'netcoredbg',
       },
     }
   end,
