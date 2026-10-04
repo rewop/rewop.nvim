@@ -23,6 +23,7 @@ return {
     -- only the CLI integration is used, copilot.lua handles suggestions
     nes = { enabled = false },
     cli = {
+      win = { layout = 'left', split = { width = 60 } },
       context = {
         position = location 'position',
         file = location 'file',
@@ -89,7 +90,7 @@ return {
         require('sidekick.cli').focus()
       end,
       mode = { 'n', 't', 'i', 'x' },
-      desc = 'Sidekick focus',
+      desc = 'Sidekick toggle focus (sidekick <-> previous window)',
     },
   },
 }
