@@ -31,13 +31,21 @@ return {
     vim.g.loaded_netrwPlugin = 1
     vim.g.loaded_netrw = 1
 
-    -- Open neotree startup startup
+    -- Open neotree on startup, unless reading from stdin
     vim.api.nvim_create_augroup('neotree', {})
+    local reading_stdin = false
+    vim.api.nvim_create_autocmd('StdinReadPre', {
+      desc = 'Remember that nvim is reading from stdin',
+      group = 'neotree',
+      callback = function()
+        reading_stdin = true
+      end,
+    })
     vim.api.nvim_create_autocmd('VimEnter', {
       desc = 'Open Neotree automatically',
       group = 'neotree',
       callback = function()
-        if vim.fn.argc() == 0 and vim.fn.exists 's:std_in' == 0 then
+        if vim.fn.argc() == 0 and not reading_stdin then
           vim.cmd 'Neotree show'
         end
       end,
@@ -45,9 +53,9 @@ return {
 
     -- [[Keymaps]]
     local km = vim.keymap
-    km.set('n', '<leader>et', '<cmd>Neotree toggle last<CR>', { desc = 'Focus neotree explorer' })
+    km.set('n', '<leader>et', '<cmd>Neotree toggle last<CR>', { desc = 'Toggle neotree explorer' })
     km.set('n', '<leader>ec', '<cmd>Neotree close<CR>', { desc = 'Close neotree explorer' })
-    km.set('n', '<leader>ee', '<cmd>Neotree focus last<CR>', { desc = 'Toggle neotree explorer' })
+    km.set('n', '<leader>ee', '<cmd>Neotree focus last<CR>', { desc = 'Focus neotree explorer' })
     km.set('n', '<leader>ef', '<cmd>Neotree focus filesystem<CR>', { desc = 'Show neotree file explorer' })
     km.set('n', '<leader>eg', '<cmd>Neotree focus git_status<CR>', { desc = 'Show neotree git status explorer' })
     km.set('n', '<leader>eb', '<cmd>Neotree focus buffers<CR>', { desc = 'Show neotree buffer explorer' })
@@ -55,11 +63,6 @@ return {
 
   config = function()
     local neotree = require 'neo-tree'
-    -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-    vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
-    vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
-    vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
-    vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
 
     neotree.setup {
       window = {
