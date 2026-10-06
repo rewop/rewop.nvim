@@ -31,26 +31,6 @@ return {
     vim.g.loaded_netrwPlugin = 1
     vim.g.loaded_netrw = 1
 
-    -- Open neotree on startup, unless reading from stdin
-    vim.api.nvim_create_augroup('neotree', {})
-    local reading_stdin = false
-    vim.api.nvim_create_autocmd('StdinReadPre', {
-      desc = 'Remember that nvim is reading from stdin',
-      group = 'neotree',
-      callback = function()
-        reading_stdin = true
-      end,
-    })
-    vim.api.nvim_create_autocmd('VimEnter', {
-      desc = 'Open Neotree automatically',
-      group = 'neotree',
-      callback = function()
-        if vim.fn.argc() == 0 and not reading_stdin then
-          vim.cmd 'Neotree show'
-        end
-      end,
-    })
-
     -- [[Keymaps]]
     local km = vim.keymap
     km.set('n', '<leader>et', '<cmd>Neotree toggle last<CR>', { desc = 'Toggle neotree explorer' })
