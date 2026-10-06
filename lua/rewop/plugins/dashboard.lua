@@ -110,7 +110,7 @@ return {
     dashboard = {
       preset = {
         keys = {
-          { icon = ' ', key = 'd', desc = 'Review changes (CodeDiff)', action = ':CodeDiff' },
+          { icon = ' ', key = 'd', desc = 'Review changes', action = ':Review' },
           { icon = ' ', key = 'b', desc = 'Review branch against main', action = review_branch },
           { icon = ' ', key = 'f', desc = 'Find file', action = ':FzfLua files' },
           { icon = ' ', key = 's', desc = 'Restore session', action = ":lua require('persistence').load()" },
