@@ -63,3 +63,14 @@ vim.keymap.set('n', '<leader>y+', '"+y', { desc = 'Yank to system register' })
 vim.keymap.set('n', '<leader>p+', '"+p', { desc = 'Paste from system register' })
 vim.keymap.set('n', '<leader>py', '"0p', { desc = 'Paste from the last yank register' })
 vim.keymap.set('n', '<leader>pd', '"1p', { desc = 'Paste from the last delete register' })
+
+-- keymaps for ui toggles
+vim.keymap.set('n', '<leader>uw', function()
+  local wrap = require('rewop.extensions.codediff-wrap').toggle()
+  if wrap == nil then
+    wrap = not vim.wo.wrap
+    vim.opt_local.wrap = wrap
+    vim.opt_local.linebreak = wrap
+  end
+  vim.notify('Wrap ' .. (wrap and 'on' or 'off'))
+end, { desc = 'Toggle [w]rap' })
