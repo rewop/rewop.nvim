@@ -67,6 +67,27 @@ return {
     },
     config = function()
       require('neogit').setup()
+
+      -- neogit's codediff integration still builds the pre-v4 session config
+      -- (mode/original_path/explorer_data); codediff v4 expects Path refs and a
+      -- panel table, so translate until neogit catches up
+      local view = require 'codediff.ui.view'
+      local path = require 'codediff.core.path'
+      local create = view.create
+      view.create = function(cfg, ...)
+        if cfg.mode and not cfg.original then
+          cfg.original = path.make_ref(cfg.original_path, cfg.git_root)
+          cfg.modified = path.make_ref(cfg.modified_path, cfg.git_root)
+          if cfg.mode == 'explorer' then
+            local data = cfg.explorer_data or {}
+            if cfg.original_revision then
+              data.source_revisions = { original = cfg.original_revision, modified = cfg.modified_revision }
+            end
+            cfg.panel = { name = 'explorer', data = data }
+          end
+        end
+        return create(cfg, ...)
+      end
       vim.keymap.set('n', '<leader>gg', function()
         require('neogit').open { kind = 'tab' }
       end, { desc = 'Open Neogit' })
