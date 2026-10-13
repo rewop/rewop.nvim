@@ -78,6 +78,17 @@ local function review_branch()
   vim.cmd('Review branch' .. (branch ~= '' and vim.v.shell_error == 0 and ' ' .. branch or ''))
 end
 
+-- open an empty scratch buffer with the file explorer alongside it
+local function new_file()
+  vim.cmd.enew()
+  vim.cmd 'Neotree show filesystem'
+end
+
+-- like the regular file finder, but also lists gitignored files
+local function find_all_files()
+  require('fzf-lua').files { no_ignore = true }
+end
+
 local function header()
   local rows = {}
   for row = 1, #glyphs[1] do
@@ -110,12 +121,16 @@ return {
     dashboard = {
       preset = {
         keys = {
-          { icon = ' ', key = 'd', desc = 'Review changes', action = ':Review' },
-          { icon = ' ', key = 'b', desc = 'Review branch against main', action = review_branch },
-          { icon = ' ', key = 'f', desc = 'Find file', action = ':FzfLua files' },
-          { icon = ' ', key = 's', desc = 'Restore session', action = ":lua require('persistence').load()" },
+          { icon = ' ', key = 'n', desc = 'New file', action = new_file },
+          { icon = ' ', key = 'f', desc = 'Find file', action = ':FzfLua files' },
+          { icon = ' ', key = 'a', desc = 'Find all files (incl. ignored)', action = find_all_files },
+          { icon = ' ', key = 'e', desc = 'Explorer', action = ':Neotree focus filesystem' },
+          { icon = ' ', key = 'g', desc = 'Grep', action = ':FzfLua live_grep' },
+          { icon = ' ', key = 'd', desc = 'Review changes', action = ':Review' },
+          { icon = ' ', key = 'b', desc = 'Review branch against main', action = review_branch },
+          { icon = ' ', key = 's', desc = 'Restore session', action = ":lua require('persistence').load()" },
           { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
-          { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+          { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
         },
       },
       sections = function()

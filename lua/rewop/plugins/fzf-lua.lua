@@ -33,6 +33,9 @@ return {
 
     vim.keymap.set('n', '<leader>gf', fzf.git_files, { desc = 'Search [G]it [F]ile' })
     vim.keymap.set('n', '<leader>sf', fzf.files, { desc = '[S]earch [F]ile' })
+    vim.keymap.set('n', '<leader>sF', function()
+      fzf.files { no_ignore = true }
+    end, { desc = '[S]earch all [F]iles (incl. ignored)' })
     vim.keymap.set('n', '<leader>sb', fzf.buffers, { desc = '[S]earch [B]uffers' })
     vim.keymap.set('n', '<leader>sh', fzf.helptags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sw', fzf.grep_cword, { desc = '[S]earch current [W]ord' })
