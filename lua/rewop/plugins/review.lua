@@ -21,6 +21,7 @@ return {
   opts = {},
   keys = {
     { '<leader>rr', '<cmd>Review<cr>', desc = 'Review working tree' },
+    { '<leader>rq', '<cmd>Review close<cr>', desc = 'Review close (export comments)' },
     { '<leader>rc', '<cmd>Review commits<cr>', desc = 'Review commits' },
     { '<leader>rb', '<cmd>Review branch<cr>', desc = 'Review branch' },
     { '<leader>rv', function() require('rewop.extensions.codediff-reviewed').toggle() end, desc = 'Toggle file reviewed (codediff)' },
