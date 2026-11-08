@@ -17,6 +17,36 @@ local function location(kind)
   end
 end
 
+-- Like sidekick's own picker, but hides external sessions (agents running in other
+-- tmux panes), which can't be opened in a window. If `name` is given and that tool
+-- is already attached, just toggle its window.
+local function pick(name)
+  local State = require 'sidekick.cli.state'
+  if name and #State.get { name = name, attached = true } > 0 then
+    return require('sidekick.cli').toggle { name = name, focus = true }
+  end
+  local items = vim.tbl_filter(function(s)
+    return not s.external
+  end, State.get { name = name, installed = true })
+  local open = function(state)
+    if state then
+      State.attach(state, { show = true, focus = true })
+    end
+  end
+  if name and #items == 1 then
+    return open(items[1])
+  end
+  vim.ui.select(items, {
+    prompt = 'Select CLI tool:',
+    kind = 'sidekick_cli',
+    format_item = function(state)
+      return table.concat(vim.tbl_map(function(p)
+        return p[1]
+      end, require('sidekick.cli.ui.select').format(state)))
+    end,
+  }, open)
+end
+
 return {
   'folke/sidekick.nvim',
   opts = {
@@ -35,14 +65,21 @@ return {
     {
       '<leader>ii',
       function()
-        require('sidekick.cli').toggle { name = 'claude', focus = true }
+        pick 'claude'
       end,
       desc = 'Sidekick toggle Claude',
     },
     {
+      '<leader>iP',
+      function()
+        pick 'pi'
+      end,
+      desc = 'Sidekick toggle Pi',
+    },
+    {
       '<leader>is',
       function()
-        require('sidekick.cli').select { filter = { installed = true } }
+        pick()
       end,
       desc = 'Sidekick select CLI',
     },
@@ -87,6 +124,10 @@ return {
     {
       '<c-.>',
       function()
+        -- nothing open yet: use the filtered picker instead of sidekick's full list
+        if #require('sidekick.cli.state').get { attached = true, terminal = true } == 0 then
+          return pick()
+        end
         require('sidekick.cli').focus()
       end,
       mode = { 'n', 't', 'i', 'x' },

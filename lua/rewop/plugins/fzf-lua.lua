@@ -6,6 +6,10 @@ return {
     local fzf = require 'fzf-lua'
 
     fzf.setup {
+      -- fzf-lua's default profile is { 'border-fused', 'hide' }. 'hide' makes <Esc>
+      -- hide the picker instead of aborting it, so vim.ui.select callbacks never
+      -- fire and dressing.nvim's select queue stalls (sidekick picker stops opening).
+      'border-fused',
       winopts = {
         height = 0.95,
         width = 0.95,
