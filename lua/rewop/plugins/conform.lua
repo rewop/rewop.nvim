@@ -35,16 +35,26 @@ return {
     },
   },
   config = function()
+    -- oxfmt wins in projects that configure it; otherwise fall back to prettier.
+    local js = { 'oxfmt', 'prettierd', 'prettier', stop_after_first = true }
+
     require('conform').setup {
+      formatters = {
+        oxfmt = {
+          condition = function(_, ctx)
+            return vim.fs.root(ctx.dirname, { '.oxfmtrc.json', '.oxfmtrc.jsonc', 'oxfmt.config.ts' }) ~= nil
+          end,
+        },
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
-        javascript = { 'prettierd', 'prettier' },
-        typescript = { 'prettierd', 'prettier' },
-        javascriptreact = { 'prettierd', 'prettier' },
-        typescriptreact = { 'prettierd', 'prettier' },
+        javascript = js,
+        typescript = js,
+        javascriptreact = js,
+        typescriptreact = js,
         css = { 'prettierd', 'prettier' },
         html = { 'prettierd', 'prettier' },
-        json = { 'prettierd', 'prettier' },
+        json = js,
         yaml = { 'prettierd', 'prettier' },
         markdown = { 'prettierd', 'prettier' },
         astro = { 'prettierd', 'prettier' },

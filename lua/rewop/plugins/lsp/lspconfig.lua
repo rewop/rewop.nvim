@@ -52,7 +52,7 @@ return {
 
     local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-    vim.diagnostic.config({
+    vim.diagnostic.config {
       virtual_text = true,
       underline = true,
       update_in_insert = false,
@@ -65,10 +65,89 @@ return {
           [vim.diagnostic.severity.INFO] = ' ',
         },
       },
-    })
+    }
+
+    -- Major version of the TypeScript installed in `root`'s node_modules (0 if none).
+    local function ts_major(root)
+      local ok, lines = pcall(vim.fn.readfile, vim.fs.joinpath(root, 'node_modules/typescript/package.json'))
+      if not ok then
+        return 0
+      end
+      local ok_json, pkg = pcall(vim.json.decode, table.concat(lines, '\n'))
+      return ok_json and tonumber(tostring(pkg.version or ''):match '^(%d+)') or 0
+    end
+
+    local function ts_project_root(bufnr)
+      return vim.fs.root(bufnr, { { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }, { '.git' } })
+    end
+
+    -- TypeScript 7 (native) ships no tsserver.js, so ts_ls silently falls back to its
+    -- bundled JS tsserver. Route TS >= 7 projects to the native `tsc --lsp` server instead.
+    local default_ts_ls_root = vim.lsp.config.ts_ls.root_dir
+
+    local oxlint_configs = {
+      '.oxlintrc.json',
+      '.oxlintrc.jsonc',
+      'oxlint.config.ts',
+      'oxlint.config.mts',
+      'oxlint.config.js',
+      'oxlint.config.mjs',
+    }
 
     local servers = {
-      'ts_ls',
+      {
+        'ts_ls',
+        {
+          root_dir = function(bufnr, on_dir)
+            local root = ts_project_root(bufnr)
+            if root and ts_major(root) >= 7 then
+              return
+            end
+            default_ts_ls_root(bufnr, on_dir)
+          end,
+        },
+      },
+      {
+        'tsc',
+        {
+          -- Use the project's own TS 7 binary (lspconfig's default caches it module-locally).
+          cmd = function(dispatchers, config)
+            local root = (config or {}).root_dir
+            local bin = root and vim.fs.joinpath(root, 'node_modules/.bin/tsc')
+            if not (bin and vim.fn.executable(bin) == 1) then
+              bin = 'tsc'
+            end
+            return vim.lsp.rpc.start({ bin, '--lsp', '--stdio' }, dispatchers)
+          end,
+          root_dir = function(bufnr, on_dir)
+            local root = ts_project_root(bufnr)
+            if root and ts_major(root) >= 7 then
+              on_dir(root)
+            end
+          end,
+        },
+      },
+      {
+        -- Only for projects that have an oxlint config; uses the project's own oxlint.
+        'oxlint',
+        {
+          cmd = function(dispatchers, config)
+            local bin = 'oxlint'
+            local root = (config or {}).root_dir
+            if root then
+              local found = vim.fs.find('node_modules/.bin/oxlint', { path = root, upward = true })[1]
+              bin = found or bin
+            end
+            return vim.lsp.rpc.start({ bin, '--lsp' }, dispatchers)
+          end,
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, oxlint_configs)
+            if root then
+              on_dir(root)
+            end
+          end,
+        },
+      },
       'html',
       'cssls',
       'tailwindcss',
@@ -96,7 +175,24 @@ return {
         },
       },
       'pyright',
-      'gopls',
+      {
+        'gopls',
+        {
+          settings = {
+            gopls = {
+              -- Keep gopls out of frontend deps, nested worktrees and build output in big monorepos.
+              directoryFilters = {
+                '-**/node_modules',
+                '-**/.worktrees',
+                '-**/.claude',
+                '-**/.git',
+                '-**/dist',
+                '-**/build',
+              },
+            },
+          },
+        },
+      },
       'sqlls',
       'jsonls',
       'yamlls',
@@ -113,7 +209,20 @@ return {
       --     filetypes = { 'go', 'gomod' },
       --   },
       -- },
-      'graphql',
+      {
+        -- Default config starts with a nil root on every TSX file; only start with a graphql config.
+        'graphql',
+        {
+          root_dir = function(bufnr, on_dir)
+            local root = vim.fs.root(bufnr, function(name)
+              return name:match '^%.graphqlrc' ~= nil or name:match '^%.?graphql%.config%.' ~= nil
+            end)
+            if root then
+              on_dir(root)
+            end
+          end,
+        },
+      },
       'dartls',
       'prismals',
     }
