@@ -18,14 +18,19 @@ return {
       fzf_opts = { ['--layout'] = 'default' }, -- prompt at the bottom, list grows upward
       keymap = {
         fzf = {
+          true, -- inherit defaults (alt-a toggle-all, ctrl-f/b paging, ...)
           ['ctrl-j'] = 'down',
           ['ctrl-k'] = 'up',
         },
       },
       actions = {
         files = {
+          true, -- inherit defaults (ctrl-v/ctrl-t splits, alt-i/alt-h toggles, ...)
           ['enter'] = require('fzf-lua.actions').file_edit_or_qf,
+          -- selected (or current) entries -> quickfix
           ['ctrl-s'] = require('fzf-lua.actions').file_sel_to_qf,
+          -- all results -> quickfix (like Telescope's <C-q>)
+          ['ctrl-q'] = { fn = require('fzf-lua.actions').file_sel_to_qf, prefix = 'select-all' },
         },
       },
       lsp = { file_icons = true },
