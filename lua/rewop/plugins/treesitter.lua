@@ -17,6 +17,9 @@ local ensure_installed = {
   'http',
   'prisma',
   'c_sharp',
+  'java',
+  'kotlin',
+  'groovy',
   'markdown',
   'markdown_inline',
 }

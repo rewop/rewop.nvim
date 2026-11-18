@@ -46,6 +46,8 @@ return {
         'ruff',
       },
       automatic_installation = true,
+      -- jdtls is started by nvim-jdtls (plugins/jdtls.lua); auto-enabling it would attach a second client.
+      automatic_enable = { exclude = { 'jdtls' } },
     }
 
     mason_tool_installer.setup {
@@ -56,6 +58,10 @@ return {
         'goimports',
         'goimports-reviser',
         'eslint_d',
+        -- Java (started via nvim-jdtls)
+        'jdtls',
+        'java-debug-adapter',
+        'java-test',
       },
     }
   end,
