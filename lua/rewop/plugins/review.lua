@@ -63,6 +63,5 @@ return {
     },
     { '<leader>rl', '<cmd>Review list<cr>', desc = 'Review list comments' },
     { '<leader>rp', '<cmd>Review preview<cr>', desc = 'Review preview export' },
-    { '<leader>rs', '<cmd>Review sidekick<cr>', desc = 'Review send comments to sidekick' },
   },
 }
