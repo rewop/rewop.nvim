@@ -33,6 +33,14 @@ return {
             GitSignsPopupCode = { fg = colors.green, bg = colors.surface0 },
             GitSignsPopupBullet = { fg = colors.peach },
             GitSignsPopupTrailer = { fg = colors.overlay1, style = { 'italic' } },
+            -- treesitter-context header: shaded bar + thin rule (separator in
+            -- plugins/treesitter-context.lua). catppuccin's integration is off
+            -- (see integrations below), so the Bottom groups keep the plugin's
+            -- default of no highlight. Setting an fg on any of these would paint
+            -- over the header's syntax colors.
+            TreesitterContext = { bg = colors.mantle },
+            TreesitterContextLineNumber = { fg = colors.overlay1, bg = colors.mantle, style = { 'italic' } },
+            TreesitterContextSeparator = { fg = colors.surface1 },
           }
         end,
         integrations = {
@@ -56,7 +64,10 @@ return {
           notify = true,
           fzf = true,
           treesitter = true,
-          treesitter_context = true,
+          -- off: it underlines the last header line, and catppuccin merges
+          -- overrides key by key, so custom_highlights can't remove that.
+          -- Groups are defined in custom_highlights above.
+          treesitter_context = false,
           which_key = true,
         },
       }
