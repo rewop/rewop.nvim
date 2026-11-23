@@ -17,12 +17,13 @@ return {
     },
     'MunifTanjim/nui.nvim',
   },
-  cmd = 'Review',
+  cmd = { 'Review', 'PiDiff' },
   opts = {},
   config = function(_, opts)
     local review = require 'review'
     review.setup(opts)
     require('rewop.extensions.review-tabs').setup()
+    require('rewop.extensions.pi-diff').setup()
     -- WORKAROUND (review.nvim 1.10.1): close() runs a bare `tabclose` before
     -- restoring buffer options/clearing comments. When the review is the only
     -- tab that throws E784 and aborts the rest, leaving buffers 'nomodifiable'
@@ -62,6 +63,9 @@ return {
       desc = 'Clear reviewed marks (codediff)',
     },
     { '<leader>rl', '<cmd>Review list<cr>', desc = 'Review list comments' },
-    { '<leader>rp', '<cmd>Review preview<cr>', desc = 'Review preview export' },
+    { '<leader>ro', '<cmd>Review preview<cr>', desc = 'Review preview export (output)' },
+    { '<leader>rp', '<cmd>PiDiff prompt<cr>', desc = 'Pi: review last prompt changes' },
+    { '<leader>rP', '<cmd>PiDiff base<cr>', desc = 'Pi: review session changes' },
+    { '<leader>rs', '<cmd>PiDiff pick<cr>', desc = 'Pi: pick snapshot to review' },
   },
 }

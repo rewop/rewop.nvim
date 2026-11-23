@@ -20,6 +20,23 @@ vim.keymap.set('n', '<Leader>O', 'O<Esc>', { desc = 'Add a blank line above with
 -- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 -- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- <C-g>: show file path relative to the git root (falls back to native behaviour
+-- outside a git repo, for non-file buffers, or when a count is given)
+vim.keymap.set('n', '<C-g>', function()
+  local file = vim.api.nvim_buf_get_name(0)
+  local root = file ~= '' and vim.bo.buftype == '' and vim.fs.root(0, '.git') or nil
+  if vim.v.count > 0 or not root then
+    vim.cmd('normal! ' .. (vim.v.count > 0 and vim.v.count or '') .. '\7')
+    return
+  end
+  local path = vim.fs.relpath(root, file) or file
+  local repo = vim.fs.basename(root)
+  local lines = vim.api.nvim_buf_line_count(0)
+  local pct = math.floor(vim.fn.line '.' * 100 / lines)
+  local flags = (vim.bo.modified and ' [+]' or '') .. (vim.bo.readonly and ' [RO]' or '')
+  vim.api.nvim_echo({ { string.format('%s: "%s"%s %d line%s --%d%%--', repo, path, flags, lines, lines == 1 and '' or 's', pct) } }, false, {})
+end, { desc = 'Show file path relative to git root' })
+
 -- Center screen when searching and scrolling
 vim.keymap.set('n', '<C-u>', '<C-u>zz', {})
 vim.keymap.set('n', '<C-d>', '<C-d>zz', {})
